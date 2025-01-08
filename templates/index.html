@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Сократитель ссылок</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Сократитель ссылок</h1>
+        <form method="POST">
+            <input type="url" name="original_link" placeholder="Введите ссылку" required>
+            <button type="submit">Сократить</button>
+        </form>
+        
+        {% if short_link %}
+        <div class="result">
+            <p>Сокращённая ссылка:</p>
+            <a href="/{{ short_link }}" target="_blank">http://localhost:8000/{{ short_link }}</a>
+            <br>
+            <button class="copy-btn" onclick="copyLink()">Скопировать ссылку</button>
+        </div>
+        {% endif %}
+        
+        {% if error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyLink() {
+            const link = document.querySelector('.result a');
+            const range = document.createRange();
+            range.selectNode(link);
+            window.getSelection().removeAllRanges(); 
+            window.getSelection().addRange(range);
+            document.execCommand('copy');
+            window.getSelection().removeAllRanges(); 
+        }
+    </script>
+</body>
+</html>
